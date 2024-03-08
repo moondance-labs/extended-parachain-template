@@ -1252,7 +1252,7 @@ dependencies = [
 [[package]]
 name = "ccp-authorities-noting-inherent"
 version = "0.1.0"
-source = "git+https://github.com/moondance-labs/dancekit?branch=master#0416d6ffedb2da630b474327286ff38f75cdec29"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
 dependencies = [
  "async-trait",
  "cumulus-primitives-core",
@@ -2620,7 +2620,7 @@ dependencies = [
 [[package]]
 name = "dc-orchestrator-chain-interface"
 version = "0.1.0"
-source = "git+https://github.com/moondance-labs/dancekit?branch=master#0416d6ffedb2da630b474327286ff38f75cdec29"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
 dependencies = [
  "async-trait",
  "cumulus-primitives-core",
@@ -2715,6 +2715,7 @@ dependencies = [
  "cumulus-primitives-core",
  "cumulus-primitives-timestamp",
  "cumulus-primitives-utility",
+ "dp-consensus",
  "dp-impl-tanssi-pallets-config",
  "frame-benchmarking",
  "frame-executive",
@@ -2918,7 +2919,7 @@ checksum = "9ea835d29036a4087793836fa931b08837ad5e957da9e23886b29586fb9b6650"
 [[package]]
 name = "dp-chain-state-snapshot"
 version = "0.1.0"
-source = "git+https://github.com/moondance-labs/dancekit?branch=master#0416d6ffedb2da630b474327286ff38f75cdec29"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
 dependencies = [
  "cumulus-primitives-core",
  "parity-scale-codec",
@@ -2930,7 +2931,7 @@ dependencies = [
 [[package]]
 name = "dp-collator-assignment"
 version = "0.1.0"
-source = "git+https://github.com/moondance-labs/dancekit?branch=master#0416d6ffedb2da630b474327286ff38f75cdec29"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
 dependencies = [
  "cumulus-primitives-core",
  "frame-support 4.0.0-dev",
@@ -2948,9 +2949,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "dp-consensus"
+version = "0.1.0"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
+dependencies = [
+ "cumulus-primitives-core",
+ "frame-support 4.0.0-dev",
+ "frame-system 4.0.0-dev",
+ "nimbus-primitives",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-api 4.0.0-dev",
+ "sp-consensus-aura",
+ "sp-runtime 24.0.0",
+ "sp-std 8.0.0",
+]
+
+[[package]]
 name = "dp-core"
 version = "0.1.0"
-source = "git+https://github.com/moondance-labs/dancekit?branch=master#0416d6ffedb2da630b474327286ff38f75cdec29"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
 dependencies = [
  "cumulus-primitives-core",
  "frame-support 4.0.0-dev",
@@ -2965,8 +2983,9 @@ dependencies = [
 [[package]]
 name = "dp-impl-tanssi-pallets-config"
 version = "0.1.0"
-source = "git+https://github.com/moondance-labs/dancekit?branch=master#0416d6ffedb2da630b474327286ff38f75cdec29"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
 dependencies = [
+ "dp-consensus",
  "frame-support 4.0.0-dev",
  "impls",
  "pallet-author-inherent",
@@ -5599,6 +5618,7 @@ dependencies = [
  "cumulus-primitives-core",
  "cumulus-primitives-timestamp",
  "cumulus-primitives-utility",
+ "dp-consensus",
  "dp-impl-tanssi-pallets-config",
  "frame-benchmarking",
  "frame-executive",
@@ -6670,7 +6690,7 @@ dependencies = [
 [[package]]
 name = "pallet-cc-authorities-noting"
 version = "0.1.0"
-source = "git+https://github.com/moondance-labs/dancekit?branch=master#0416d6ffedb2da630b474327286ff38f75cdec29"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
 dependencies = [
  "ccp-authorities-noting-inherent",
  "cumulus-pallet-parachain-system",
@@ -13602,7 +13622,7 @@ checksum = "3369f5ac52d5eb6ab48c6b4ffdc8efbcad6b89c765749064ba298f2c68a16a76"
 [[package]]
 name = "test-relay-sproof-builder"
 version = "0.1.0"
-source = "git+https://github.com/moondance-labs/dancekit?branch=master#0416d6ffedb2da630b474327286ff38f75cdec29"
+source = "git+https://github.com/moondance-labs/dancekit?branch=master#eacbae6eb15d4fdef31584a5af2f028e79b1302e"
 dependencies = [
  "cumulus-primitives-core",
  "dp-collator-assignment",

@@ -27,6 +27,7 @@ use sp_std::prelude::*;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 use nimbus_primitives::NimbusId;
+use nimbus_primitives::SlotBeacon;
 use frame_support::traits::fungible::HoldConsideration;
 use frame_support::traits::{Contains, LinearStoragePrice};
 use frame_support::{

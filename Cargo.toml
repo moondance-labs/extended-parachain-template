@@ -147,6 +147,7 @@ pallet-async-backing = { git = "https://github.com/Moonsong-Labs/moonkit", branc
 pallet-author-inherent = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main", default-features = false }
 
 # Dancekit (wasm)
+dp-consensus = { git = "https://github.com/moondance-labs/dancekit", branch = "master", default-features = false }
 dp-impl-tanssi-pallets-config = { git = "https://github.com/moondance-labs/dancekit", branch = "master", default-features = false }
 pallet-cc-authorities-noting = { git = "https://github.com/moondance-labs/dancekit", branch = "master", default-features = false }
 

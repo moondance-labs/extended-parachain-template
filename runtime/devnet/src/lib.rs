@@ -23,7 +23,7 @@ use sp_runtime::{
 	ApplyExtrinsicResult,
 };
 use nimbus_primitives::NimbusId;
-
+use nimbus_primitives::SlotBeacon;
 use sp_std::prelude::*;
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
