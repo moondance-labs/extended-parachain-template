@@ -64,6 +64,7 @@ sp-session = { workspace = true, default-features = false }
 sp-std = { workspace = true, default-features = false }
 sp-transaction-pool = { workspace = true, default-features = false }
 sp-version = { workspace = true, default-features = false }
+pallet-message-queue = { workspace = true, default-features = false }
 
 # Polkadot
 pallet-xcm = { workspace = true, default-features = false }
@@ -72,6 +73,7 @@ polkadot-runtime-common = { workspace = true, default-features = false }
 xcm = { workspace = true, default-features = false }
 xcm-builder = { workspace = true, default-features = false }
 xcm-executor = { workspace = true, default-features = false }
+parachains-common = { workspace = true, default-features = false }
 
 # Cumulus
 assets-common = { workspace = true, default-features = false }
@@ -190,6 +192,7 @@ try-runtime = [
   "pallet-balances/try-runtime",
   "pallet-collator-selection/try-runtime",
   "pallet-collective/try-runtime",
+  "pallet-message-queue/try-runtime",
   "pallet-motion/try-runtime",
   "pallet-multisig/try-runtime",
   "pallet-preimage/try-runtime",
