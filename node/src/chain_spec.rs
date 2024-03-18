@@ -150,6 +150,7 @@ pub mod devnet {
 				relay_chain: "rococo-local".into(), // You MUST set this to the correct network!
 				para_id: PARA_ID,
 			},
+			&vec![0, 1, 2, 4, 5, 6]
 		)
 	}
 
@@ -212,6 +213,7 @@ pub mod devnet {
 				relay_chain: "rococo-local".into(), // You MUST set this to the correct network!
 				para_id: PARA_ID,
 			},
+			&vec![0, 1, 2, 4, 5, 6]
 		)
 	}
 
@@ -227,9 +229,6 @@ pub mod devnet {
 
 		devnet_runtime::RuntimeGenesisConfig {
 			system: devnet_runtime::SystemConfig {
-				code: devnet_runtime::WASM_BINARY
-					.expect("WASM binary was not build, please build it!")
-					.to_vec(),
 				..Default::default()
 			},
 			balances: devnet_runtime::BalancesConfig {
@@ -359,6 +358,7 @@ pub mod mainnet {
 				relay_chain: "rococo-local".into(), // You MUST set this to the correct network!
 				para_id: PARA_ID,
 			},
+			&vec![0, 1, 2, 4, 5, 6]
 		)
 	}
 
@@ -431,6 +431,7 @@ pub mod mainnet {
 				relay_chain: "rococo-local".into(), // You MUST set this to the correct network!
 				para_id: PARA_ID,
 			},
+			&vec![0, 1, 2, 4, 5, 6]
 		)
 	}
 
@@ -446,9 +447,6 @@ pub mod mainnet {
 
 		mainnet_runtime::RuntimeGenesisConfig {
 			system: mainnet_runtime::SystemConfig {
-				code: mainnet_runtime::WASM_BINARY
-					.expect("WASM binary was not build, please build it!")
-					.to_vec(),
 				..Default::default()
 			},
 			balances: mainnet_runtime::BalancesConfig {

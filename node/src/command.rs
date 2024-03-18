@@ -1,6 +1,5 @@
 use std::{net::SocketAddr, path::PathBuf};
-
-use cumulus_client_cli::generate_genesis_block;
+use sc_chain_spec::BuildGenesisBlock;
 use cumulus_primitives_core::ParaId;
 use frame_benchmarking_cli::{BenchmarkCmd, SUBSTRATE_REFERENCE_HARDWARE};
 use log::info;
@@ -265,11 +264,9 @@ pub fn run() -> Result<()> {
 		Some(Subcommand::ExportGenesisState(cmd)) => {
 			let runner = cli.create_runner(cmd)?;
 			runner.sync_run(|config| {
-				construct_benchmark_partials!(config, |partials| {
-					let spec =
-						cli.load_spec(&cmd.shared_params.chain.clone().unwrap_or_default())?;
-					cmd.run::<Block>(&*spec, &*partials.client)
-				})
+				let partials = new_partial(&config)?;
+
+				cmd.run(partials.client)
 			})
 		},
 		Some(Subcommand::ExportGenesisWasm(cmd)) => {
@@ -350,7 +347,7 @@ pub fn run() -> Result<()> {
 					);
 
 				let block: Block =
-					generate_genesis_block(&*config.chain_spec, sp_runtime::StateVersion::V1)
+					BuildGenesisBlock(&*config.chain_spec, sp_runtime::StateVersion::V1)
 						.map_err(|e| format!("{:?}", e))?;
 				let genesis_state = format!("0x{:?}", HexDisplay::from(&block.header().encode()));
 
