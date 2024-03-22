@@ -2,7 +2,7 @@
 panic = "unwind"
 
 [workspace]
-members = ["node", "pallets/*", "runtime/mainnet", "runtime/devnet"]
+members = ["node", "pallets/*", "runtime/mainnet", "runtime/devnet", "tanssi/templates/simple/*"]
 resolver = "2"
 
 [workspace.package]
@@ -11,6 +11,32 @@ edition = "2021"
 homepage = "https://substrate.io"
 license = "Unlicense"
 repository = "https://github.com/paritytech/extended-parachain-template/"
+
+
+[workspace.lints.clippy]
+# Deny main lint groups
+complexity = { level = "deny", priority = 1 }
+correctness = { level = "deny", priority = 1 }
+suspicious = { level = "deny", priority = 1 }
+
+# Add some additional lints
+as_underscore = { level = "warn", priority = 1 }
+cast_lossless = { level = "warn", priority = 1 }
+cast_possible_wrap = { level = "warn", priority = 1 }
+cast_precision_loss = { level = "warn", priority = 1 }
+cast_sign_loss = { level = "warn", priority = 1 }
+debug_assert_with_mut_call = { level = "warn", priority = 1 }
+fn_to_numeric_cast_any = { level = "warn", priority = 1 }
+invalid_upcast_comparisons = { level = "warn", priority = 1 }
+
+# Allow annoying lints and false positives
+erasing_op = { level = "allow", priority = 2 }
+identity_op = { level = "allow", priority = 2 }
+too-many-arguments = { level = "allow", priority = 2 }
+type_complexity = { level = "allow", priority = 2 }
+
+[workspace.lints.rust]
+unsafe-code = { level = "deny", priority = 1 }
 
 [workspace.dependencies]
 
@@ -28,6 +54,21 @@ scale-info = { version = "2.9.0", default-features = false }
 serde = { version = "1.0.197", features = ["derive"] }
 serde_json = "1.0.85"
 smallvec = "1.11.0"
+async-io = "1.3"
+async-trait = "0.1"
+flume = "0.10.9"
+tokio = { version = "1.32.0", default-features = false }
+core_extensions = "1.5.3"
+tracing = { version = "0.1.37", default-features = false }
+futures-timer = "3.0.1"
+parking_lot = "0.12.1"
+tempfile = "3.1.0"
+impl-trait-for-tuples = "0.2.2"
+hex = { version = "0.4.3", default-features = false }
+bounded-collections = { version = "0.1.8", default-features = false }
+num-traits = "0.2.8"
+similar-asserts = "1.1.0"
+rand = { version = "0.8.5", default-features = false, features = [ "std_rng" ] }
 
 # Local dependencies
 devnet-runtime = { path = "runtime/devnet" }
@@ -99,6 +140,16 @@ substrate-frame-rpc-system = { git = "https://github.com/paritytech/polkadot-sdk
 substrate-prometheus-endpoint = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 substrate-wasm-builder = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 try-runtime-cli = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+polkadot-node-primitives = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+polkadot-overseer = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-consensus-aura = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-state-machine = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-block-builder = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-keystore = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-network-test = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-keyring = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+substrate-test-runtime-client = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-staking = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 
 # Cumulus
 assets-common = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
@@ -126,6 +177,27 @@ cumulus-relay-chain-rpc-interface = { git = "https://github.com/paritytech/polka
 pallet-collator-selection = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 parachain-info = { package = "staging-parachain-info", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 parachains-common = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+cumulus-client-network = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+cumulus-client-parachain-inherent = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-consensus-manual-seal = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-network-common = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-consensus = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-consensus-slots = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+pallet-asset-rate = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+pallet-proxy = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+pallet-root-testing = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+pallet-xcm-benchmarks = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-debug-derive = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-genesis-builder = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-trie = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+staging-xcm = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+staging-xcm-builder = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+staging-xcm-executor = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-consensus-slots = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-network-transactions = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sc-utils = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+sp-application-crypto = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+cumulus-test-relay-sproof-builder = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 
 # Polkadot
 pallet-xcm = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
@@ -139,15 +211,68 @@ polkadot-service = { git = "https://github.com/paritytech/polkadot-sdk", branch 
 xcm = { package = "staging-xcm", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 xcm-builder = { package = "staging-xcm-builder", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 xcm-executor = { package = "staging-xcm-executor", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
+polkadot-core-primitives = { package = "staging-xcm-executor", git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.6.0", default-features = false }
 
 # Moonkit (wasm)
-nimbus-consensus = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main" }
-nimbus-primitives = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main", default-features = false }
-pallet-async-backing = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main", default-features = false }
-pallet-author-inherent = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main", default-features = false }
+# nimbus-consensus = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main" }
+# nimbus-primitives = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main", default-features = false }
+# pallet-async-backing = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main", default-features = false }
+# pallet-author-inherent = { git = "https://github.com/Moonsong-Labs/moonkit", branch = "main", default-features = false }
+# pallet-maintenance-mode = { git = "https://github.com/moondance-labs/moonkit", branch = "main", default-features = false }
+# pallet-migrations = { git = "https://github.com/moondance-labs/moonkit", branch = "main", default-features = false }
+# xcm-primitives = { git = "https://github.com/moondance-labs/moonkit", branch = "main", default-features = false }
+# pallet-foreign-asset-creator = { git = "https://github.com/moondance-labs/moonkit", branch = "main", default-features = false }
+
+nimbus-consensus = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0" }
+nimbus-primitives = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-async-backing = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-author-inherent = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-evm-precompile-balances-erc20 = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-evm-precompile-batch = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-evm-precompile-call-permit = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-evm-precompile-xcm-utils = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-evm-precompileset-assets-erc20 = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-foreign-asset-creator = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-maintenance-mode = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-migrations = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-relay-storage-roots = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+xcm-primitives = { git = "https://github.com/moondance-labs/moonkit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+
+
 
 # Dancekit (wasm)
-dp-consensus = { git = "https://github.com/moondance-labs/dancekit", branch = "master", default-features = false }
-dp-impl-tanssi-pallets-config = { git = "https://github.com/moondance-labs/dancekit", branch = "master", default-features = false }
-pallet-cc-authorities-noting = { git = "https://github.com/moondance-labs/dancekit", branch = "master", default-features = false }
+dp-consensus = { git = "https://github.com/moondance-labs/dancekit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+dp-impl-tanssi-pallets-config = { git = "https://github.com/moondance-labs/dancekit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-cc-authorities-noting = { git = "https://github.com/moondance-labs/dancekit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+ccp-authorities-noting-inherent = { git = "https://github.com/moondance-labs/dancekit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+pallet-xcm-executor-utils = { git = "https://github.com/moondance-labs/dancekit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+dp-core = { git = "https://github.com/moondance-labs/dancekit", branch = "tanssi-polkadot-v1.6.0", default-features = false }
 
+# Tanssi template specifics
+container-chain-template-simple-runtime = { path = "tanssi/templates/simple/runtime", default-features = false }
+manual-xcm-rpc = { path = "tanssi/client/manual-xcm" }
+node-common = { path = "tanssi/client/node-common" }
+tc-consensus = { path = "tanssi/client/consensus" }
+pallet-registrar-runtime-api = { path = "tanssi/pallets/registrar/rpc/runtime-api", default-features = false }
+pallet-registrar = { path = "tanssi/pallets/registrar", default-features = false }
+tp-container-chain-genesis-data = { path = "tanssi/primitives/container-chain-genesis-data", default-features = false }
+pallet-configuration = { path = "tanssi/pallets/configuration", default-features = false }
+tp-traits = { path = "tanssi/primitives/traits", default-features = false }
+pallet-data-preservers = { path = "tanssi/pallets/data-preservers", default-features = false }
+pallet-invulnerables = { path = "tanssi/pallets/invulnerables", default-features = false }
+pallet-pooled-staking = { path = "tanssi/pallets/pooled-staking", default-features = false }
+pallet-services-payment = { path = "tanssi/pallets/services-payment", default-features = false }
+tp-maths = { path = "tanssi/primitives/maths", default-features = false }
+runtime-common-tanssi = { path = "tanssi/runtime/common", default-features = false }
+
+# Frontier (client)
+fc-api = { git = "https://github.com/moondance-labs/frontier", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+fc-cli = { git = "https://github.com/moondance-labs/frontier", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+fc-consensus = { git = "https://github.com/moondance-labs/frontier", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+fc-db = { git = "https://github.com/moondance-labs/frontier", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+fc-mapping-sync = { git = "https://github.com/moondance-labs/frontier", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+fc-rpc = { git = "https://github.com/moondance-labs/frontier", branch = "tanssi-polkadot-v1.6.0", features = [
+	"rpc-binary-search-estimate",
+] }
+fc-rpc-core = { git = "https://github.com/moondance-labs/frontier", branch = "tanssi-polkadot-v1.6.0", default-features = false }
+fc-storage = { git = "https://github.com/moondance-labs/frontier", branch = "tanssi-polkadot-v1.6.0", default-features = false }
