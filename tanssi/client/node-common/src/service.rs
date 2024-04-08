@@ -233,9 +233,9 @@ where
             .with_offchain_heap_alloc_strategy(heap_pages)
             .with_max_runtime_instances(parachain_config.max_runtime_instances)
             .with_runtime_cache_size(parachain_config.runtime_cache_size);
-        if let Some(ref wasmtime_precompiled_path) = parachain_config.wasmtime_precompiled {
-            wasm_builder = wasm_builder.with_wasmtime_precompiled_path(wasmtime_precompiled_path);
-        }
+        // if let Some(ref wasmtime_precompiled_path) = parachain_config.wasmtime_precompiled {
+        //     wasm_builder = wasm_builder.with_wasmtime_precompiled_path(wasmtime_precompiled_path);
+        // }
 
         let executor = ExecutorOf::<T>::new_with_wasm_executor(wasm_builder.build());
 

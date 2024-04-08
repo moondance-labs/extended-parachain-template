@@ -28,10 +28,10 @@ use {
     },
     frame_system::EnsureRoot,
     pallet_xcm::XcmPassthrough,
-    pallet_xcm_executor_utils::{
-        filters::{IsReserveFilter, IsTeleportFilter},
-        DefaultTrustPolicy,
-    },
+    // pallet_xcm_executor_utils::{
+    //     filters::{IsReserveFilter, IsTeleportFilter},
+    //     DefaultTrustPolicy,
+    // },
     parachains_common::message_queue::{NarrowOriginToSibling, ParaIdToSibling},
     polkadot_runtime_common::xcm_sender::NoPriceForMessageDelivery,
     sp_core::ConstU32,
@@ -175,21 +175,21 @@ impl staging_xcm_executor::Config for XcmConfig {
     type XcmSender = XcmRouter;
     type AssetTransactor = AssetTransactors;
     type OriginConverter = XcmOriginToTransactDispatchOrigin;
-    type IsReserve = IsReserveFilter<Runtime>;
-    type IsTeleporter = IsTeleportFilter<Runtime>;
+    type IsReserve = (); // IsReserveFilter<Runtime>;
+    type IsTeleporter = (); // IsTeleportFilter<Runtime>;
     type UniversalLocation = UniversalLocation;
     type Barrier = XcmBarrier;
     type Weigher = XcmWeigher;
     type Trader = (
-        UsingComponents<WeightToFee, SelfReserve, AccountId, Balances, ()>,
-        cumulus_primitives_utility::TakeFirstAssetTrader<
-            AccountId,
-            AssetRateAsMultiplier,
-            // Use this currency when it is a fungible asset matching the given location or name:
-            (ConvertedConcreteId<AssetId, Balance, ForeignAssetsCreator, JustTry>,),
-            ForeignAssets,
-            (),
-        >,
+        // UsingComponents<WeightToFee, SelfReserve, AccountId, Balances, ()>,
+        // cumulus_primitives_utility::TakeFirstAssetTrader<
+        //     AccountId,
+        //     AssetRateAsMultiplier,
+        //     // Use this currency when it is a fungible asset matching the given location or name:
+        //     (ConvertedConcreteId<AssetId, Balance, ForeignAssetsCreator, JustTry>,),
+        //     ForeignAssets,
+        //     (),
+        // >,
     );
     type ResponseHandler = PolkadotXcm;
     type AssetTrap = PolkadotXcm;
@@ -352,6 +352,8 @@ impl pallet_foreign_asset_creator::Config for Runtime {
     type ForeignAssetDestroyerOrigin = EnsureRoot<AccountId>;
     type Fungibles = ForeignAssets;
     type WeightInfo = pallet_foreign_asset_creator::weights::SubstrateWeight<Runtime>;
+    type OnForeignAssetCreated = ();
+    type OnForeignAssetDestroyed = ();
 }
 
 impl pallet_asset_rate::Config for Runtime {
@@ -397,16 +399,16 @@ pub type AssetRateAsMultiplier =
         ForeignAssetsInstance,
     >;
 
-parameter_types! {
-    pub const TrustPolicyMaxAssets: u32 = 1000;
-    pub const AllNativeTrustPolicy: DefaultTrustPolicy = DefaultTrustPolicy::AllNative;
-}
-impl pallet_xcm_executor_utils::Config for Runtime {
-    type RuntimeEvent = RuntimeEvent;
-    type TrustPolicyMaxAssets = TrustPolicyMaxAssets;
-    type ReserveDefaultTrustPolicy = AllNativeTrustPolicy;
-    type SetReserveTrustOrigin = EnsureRoot<AccountId>;
-    type TeleportDefaultTrustPolicy = AllNativeTrustPolicy;
-    type SetTeleportTrustOrigin = EnsureRoot<AccountId>;
-    type WeightInfo = pallet_xcm_executor_utils::weights::SubstrateWeight<Runtime>;
-}
+// parameter_types! {
+//     pub const TrustPolicyMaxAssets: u32 = 1000;
+//     pub const AllNativeTrustPolicy: DefaultTrustPolicy = DefaultTrustPolicy::AllNative;
+// }
+// impl pallet_xcm_executor_utils::Config for Runtime {
+//     type RuntimeEvent = RuntimeEvent;
+//     type TrustPolicyMaxAssets = TrustPolicyMaxAssets;
+//     type ReserveDefaultTrustPolicy = AllNativeTrustPolicy;
+//     type SetReserveTrustOrigin = EnsureRoot<AccountId>;
+//     type TeleportDefaultTrustPolicy = AllNativeTrustPolicy;
+//     type SetTeleportTrustOrigin = EnsureRoot<AccountId>;
+//     type WeightInfo = pallet_xcm_executor_utils::weights::SubstrateWeight<Runtime>;
+// }

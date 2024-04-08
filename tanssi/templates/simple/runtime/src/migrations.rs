@@ -22,7 +22,7 @@
 use {
     frame_support::{pallet_prelude::GetStorageVersion, traits::PalletInfoAccess},
     pallet_migrations::{GetMigrations, Migration},
-    runtime_common::migrations::{
+    runtime_common_tanssi::migrations::{
         PolkadotXcmMigrationFixVersion, XcmpQueueMigrationFixVersion, XcmpQueueMigrationV3,
         XcmpQueueMigrationV4,
     },

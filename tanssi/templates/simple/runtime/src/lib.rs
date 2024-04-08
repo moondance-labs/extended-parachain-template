@@ -432,10 +432,15 @@ impl sp_core::Get<(Slot, SlotDuration)> for ParaSlotProvider {
     }
 }
 
+parameter_types! {
+    pub const ExpectedBlockTime: u64 = MILLISECS_PER_BLOCK;
+}
+
 impl pallet_async_backing::Config for Runtime {
     type AllowMultipleBlocksPerSlot = ConstBool<false>;
     type GetAndVerifySlot =
         pallet_async_backing::ParaSlot<RELAY_CHAIN_SLOT_DURATION_MILLIS, ParaSlotProvider>;
+    type ExpectedBlockTime = ExpectedBlockTime;
 }
 
 impl parachain_info::Config for Runtime {}
@@ -673,7 +678,7 @@ construct_runtime!(
         ForeignAssets: pallet_assets::<Instance1>::{Pallet, Call, Storage, Event<T>} = 75,
         ForeignAssetsCreator: pallet_foreign_asset_creator::{Pallet, Call, Storage, Event<T>} = 76,
         AssetRate: pallet_asset_rate::{Pallet, Call, Storage, Event<T>} = 77,
-        XcmExecutorUtils: pallet_xcm_executor_utils::{Pallet, Call, Storage, Event<T>} = 78,
+        // XcmExecutorUtils: pallet_xcm_executor_utils::{Pallet, Call, Storage, Event<T>} = 78,
 
         RootTesting: pallet_root_testing = 100,
         AsyncBacking: pallet_async_backing::{Pallet, Storage} = 110,

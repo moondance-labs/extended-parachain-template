@@ -66,8 +66,8 @@ pub enum Subcommand {
     #[cfg(not(feature = "try-runtime"))]
     TryRuntime,
 
-    /// Precompile the WASM runtime into native code
-    PrecompileWasm(sc_cli::PrecompileWasmCmd),
+    // Precompile the WASM runtime into native code
+    // PrecompileWasm(sc_cli::PrecompileWasmCmd),
 }
 
 #[derive(Debug, Parser)]

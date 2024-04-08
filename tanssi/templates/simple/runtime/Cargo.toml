@@ -15,9 +15,12 @@ workspace = true
 [dependencies]
 hex-literal = { workspace = true, optional = true }
 log = { workspace = true }
-parity-scale-codec = { workspace = true, features = [ "derive" ] }
-scale-info = { workspace = true, features = [ "derive" ] }
-serde = { workspace = true, optional = true, features = [ "derive" ] }
+parity-scale-codec = { workspace = true, features = [
+	"derive",
+	"max-encoded-len",
+] }
+scale-info = { workspace = true }
+serde = { workspace = true, features = [ "derive" ] }
 smallvec = { workspace = true }
 
 # Local
@@ -36,7 +39,7 @@ pallet-migrations = { workspace = true }
 xcm-primitives = { workspace = true }
 
 # Dancekit
-pallet-xcm-executor-utils = { workspace = true }
+# pallet-xcm-executor-utils = { workspace = true }
 
 # Substrate
 frame-executive = { workspace = true }
@@ -71,6 +74,7 @@ sp-session = { workspace = true }
 sp-std = { workspace = true }
 sp-transaction-pool = { workspace = true }
 sp-trie = { workspace = true }
+sp-io = { workspace = true }
 
 sp-version = { workspace = true }
 
@@ -145,7 +149,7 @@ std = [
 	"pallet-tx-pause/std",
 	"pallet-utility/std",
 	"pallet-xcm-benchmarks?/std",
-	"pallet-xcm-executor-utils/std",
+	# "pallet-xcm-executor-utils/std",
 	"pallet-xcm/std",
 	"parachain-info/std",
 	"parachains-common/std",
@@ -154,8 +158,7 @@ std = [
 	"polkadot-runtime-common/std",
 	"runtime-common-tanssi/std",
 	"scale-info/std",
-	"serde",
-	"serde?/std",
+	"serde/std",
 	"sp-api/std",
 	"sp-block-builder/std",
 	"sp-consensus-aura/std",
@@ -209,7 +212,7 @@ runtime-benchmarks = [
 	"pallet-tx-pause/runtime-benchmarks",
 	"pallet-utility/runtime-benchmarks",
 	"pallet-xcm-benchmarks/runtime-benchmarks",
-	"pallet-xcm-executor-utils/runtime-benchmarks",
+	# "pallet-xcm-executor-utils/runtime-benchmarks",
 	"pallet-xcm/runtime-benchmarks",
 	"parachains-common/runtime-benchmarks",
 	"polkadot-parachain-primitives/runtime-benchmarks",
@@ -251,7 +254,7 @@ try-runtime = [
 	"pallet-transaction-payment/try-runtime",
 	"pallet-tx-pause/try-runtime",
 	"pallet-utility/try-runtime",
-	"pallet-xcm-executor-utils/try-runtime",
+	# "pallet-xcm-executor-utils/try-runtime",
 	"pallet-xcm/try-runtime",
 	"parachain-info/try-runtime",
 	"polkadot-runtime-common/try-runtime",
