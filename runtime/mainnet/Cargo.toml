@@ -37,12 +37,13 @@ frame-system = { workspace = true, default-features = false }
 frame-system-benchmarking = { workspace = true, default-features = false, optional = true }
 frame-system-rpc-runtime-api = { workspace = true, default-features = false }
 frame-try-runtime = { workspace = true, default-features = false, optional = true }
+pallet-aura = { workspace = true, default-features = false }
 pallet-authorship = { workspace = true, default-features = false }
 pallet-assets = { workspace = true, default-features = false }
 pallet-balances = { workspace = true, default-features = false }
 pallet-collective = { workspace = true, default-features = false }
-pallet-message-queue = { workspace = true, default-features = false }
 pallet-scheduler = { workspace = true, default-features = false }
+pallet-session = { workspace = true, default-features = false }
 pallet-sudo = { workspace = true, default-features = false }
 pallet-timestamp = { workspace = true, default-features = false }
 pallet-transaction-payment = { workspace = true, default-features = false }
@@ -63,18 +64,20 @@ sp-session = { workspace = true, default-features = false }
 sp-std = { workspace = true, default-features = false }
 sp-transaction-pool = { workspace = true, default-features = false }
 sp-version = { workspace = true, default-features = false }
+pallet-message-queue = { workspace = true, default-features = false }
 
 # Polkadot
 pallet-xcm = { workspace = true, default-features = false }
-parachains-common = { workspace = true, default-features = false }
 polkadot-parachain-primitives = { workspace = true, default-features = false }
 polkadot-runtime-common = { workspace = true, default-features = false }
 xcm = { workspace = true, default-features = false }
 xcm-builder = { workspace = true, default-features = false }
 xcm-executor = { workspace = true, default-features = false }
+parachains-common = { workspace = true, default-features = false }
 
 # Cumulus
 assets-common = { workspace = true, default-features = false }
+cumulus-pallet-aura-ext = { workspace = true, default-features = false }
 cumulus-pallet-dmp-queue = { workspace = true, default-features = false }
 cumulus-pallet-parachain-system = { workspace = true, default-features = false, features = [
   "parameterized-consensus-hook",
@@ -86,17 +89,8 @@ cumulus-primitives-aura = { workspace = true, default-features = false }
 cumulus-primitives-core = { workspace = true, default-features = false }
 cumulus-primitives-timestamp = { workspace = true, default-features = false }
 cumulus-primitives-utility = { workspace = true, default-features = false }
+pallet-collator-selection = { workspace = true, default-features = false }
 parachain-info = { workspace = true, default-features = false }
-
-# Dancekit
-dp-consensus = { workspace = true }
-dp-impl-tanssi-pallets-config = { workspace = true }
-pallet-cc-authorities-noting = { workspace = true }
-
-# Moonkit
-nimbus-primitives = { workspace = true }
-pallet-async-backing = { workspace = true }
-pallet-author-inherent = { workspace = true }
 
 [features]
 default = ["std"]
@@ -105,6 +99,7 @@ std = [
   "log/std",
   "scale-info/std",
   "assets-common/std",
+  "cumulus-pallet-aura-ext/std",
   "cumulus-pallet-dmp-queue/std",
   "cumulus-pallet-parachain-system/std",
   "cumulus-pallet-xcm/std",
@@ -113,22 +108,21 @@ std = [
   "cumulus-primitives-core/std",
   "cumulus-primitives-timestamp/std",
   "cumulus-primitives-utility/std",
-  "dp-consensus/std",
-	"dp-impl-tanssi-pallets-config/std",
   "frame-executive/std",
   "frame-support/std",
   "frame-system-rpc-runtime-api/std",
   "frame-system/std",
-  "nimbus-primitives/std",
-	"pallet-async-backing/std",
-	"pallet-author-inherent/std",
+  "pallet-aura/std",
+  "pallet-authorship/std",
   "pallet-assets/std",
   "pallet-balances/std",
   "pallet-collective/std",
+  "pallet-collator-selection/std",
   "pallet-motion/std",
   "pallet-multisig/std",
   "pallet-preimage/std",
   "pallet-scheduler/std",
+  "pallet-session/std",
   "pallet-sudo/std",
   "pallet-timestamp/std",
   "pallet-transaction-payment-rpc-runtime-api/std",
@@ -166,6 +160,7 @@ runtime-benchmarks = [
   "frame-system/runtime-benchmarks",
   "pallet-assets/runtime-benchmarks",
   "pallet-balances/runtime-benchmarks",
+  "pallet-collator-selection/runtime-benchmarks",
   "pallet-collective/runtime-benchmarks",
   "pallet-motion/runtime-benchmarks",
   "pallet-multisig/runtime-benchmarks",
@@ -183,6 +178,7 @@ runtime-benchmarks = [
 ]
 
 try-runtime = [
+  "cumulus-pallet-aura-ext/try-runtime",
   "cumulus-pallet-dmp-queue/try-runtime",
   "cumulus-pallet-parachain-system/try-runtime",
   "cumulus-pallet-xcm/try-runtime",
@@ -190,14 +186,18 @@ try-runtime = [
   "frame-executive/try-runtime",
   "frame-system/try-runtime",
   "frame-try-runtime",
+  "pallet-aura/try-runtime",
+  "pallet-authorship/try-runtime",
   "pallet-assets/try-runtime",
   "pallet-balances/try-runtime",
+  "pallet-collator-selection/try-runtime",
   "pallet-collective/try-runtime",
   "pallet-message-queue/try-runtime",
   "pallet-motion/try-runtime",
   "pallet-multisig/try-runtime",
   "pallet-preimage/try-runtime",
   "pallet-scheduler/try-runtime",
+  "pallet-session/try-runtime",
   "pallet-sudo/try-runtime",
   "pallet-timestamp/try-runtime",
   "pallet-transaction-payment/try-runtime",

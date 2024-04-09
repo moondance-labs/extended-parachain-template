@@ -5,7 +5,7 @@ use super::{
 use core::{marker::PhantomData, ops::ControlFlow};
 use frame_support::{
 	match_types, parameter_types,
-	traits::{ConstU32, Contains, Everything, Nothing, PalletInfoAccess, ProcessMessageError},
+	traits::{ConstU32, Everything, Nothing, PalletInfoAccess, ProcessMessageError},
 	weights::Weight,
 };
 use frame_system::EnsureRoot;
@@ -120,9 +120,77 @@ match_types! {
 	};
 }
 
+//TODO: move DenyThenTry to polkadot's xcm module.
+/// Deny executing the xcm message if it matches any of the Deny filter regardless of anything else.
+/// If it passes the Deny, and matches one of the Allow cases then it is let through.
+pub struct DenyThenTry<Deny, Allow>(PhantomData<Deny>, PhantomData<Allow>)
+where
+	Deny: ShouldExecute,
+	Allow: ShouldExecute;
+
+impl<Deny, Allow> ShouldExecute for DenyThenTry<Deny, Allow>
+where
+	Deny: ShouldExecute,
+	Allow: ShouldExecute,
+{
+	fn should_execute<RuntimeCall>(
+		origin: &MultiLocation,
+		instructions: &mut [Instruction<RuntimeCall>],
+		max_weight: Weight,
+		properties: &mut Properties,
+	) -> Result<(), ProcessMessageError> {
+		Deny::should_execute(origin, instructions, max_weight, properties)?;
+		Allow::should_execute(origin, instructions, max_weight, properties)
+	}
+}
+
+// See issue <https://github.com/paritytech/polkadot/issues/5233>
+pub struct DenyReserveTransferToRelayChain;
+impl ShouldExecute for DenyReserveTransferToRelayChain {
+	fn should_execute<RuntimeCall>(
+		origin: &MultiLocation,
+		instructions: &mut [Instruction<RuntimeCall>],
+		_max_weight: Weight,
+		_properties: &mut Properties,
+	) -> Result<(), ProcessMessageError> {
+		instructions.matcher().match_next_inst_while(
+			|_| true,
+			|inst| match inst {
+				InitiateReserveWithdraw {
+					reserve: MultiLocation { parents: 1, interior: Here },
+					..
+				}
+				| DepositReserveAsset {
+					dest: MultiLocation { parents: 1, interior: Here }, ..
+				}
+				| TransferReserveAsset {
+					dest: MultiLocation { parents: 1, interior: Here }, ..
+				} => {
+					Err(ProcessMessageError::Unsupported) // Deny
+				},
+				// An unexpected reserve transfer has arrived from the Relay Chain. Generally,
+				// `IsReserve` should not allow this, but we just log it here.
+				ReserveAssetDeposited { .. }
+					if matches!(origin, MultiLocation { parents: 1, interior: Here }) =>
+				{
+					log::warn!(
+						target: "xcm::barrier",
+						"Unexpected ReserveAssetDeposited from the Relay Chain",
+					);
+					Ok(ControlFlow::Continue(()))
+				},
+				_ => Ok(ControlFlow::Continue(())),
+			},
+		)?;
+
+		// Permit everything else
+		Ok(())
+	}
+}
+
 pub type Barrier = TrailingSetTopicAsId<
-	xcm_builder::DenyThenTry<
-		xcm_builder::DenyReserveTransferToRelayChain,
+	DenyThenTry<
+		DenyReserveTransferToRelayChain,
 		(
 			TakeWeightCredit,
 			WithComputedOrigin<
@@ -152,7 +220,7 @@ impl xcm_executor::Config for XcmConfig {
 	type UniversalLocation = UniversalLocation;
 	type Barrier = Barrier;
 	type Weigher = FixedWeightBounds<UnitWeightCost, RuntimeCall, MaxInstructions>;
-	type Trader = UsingComponents<WeightToFee, SelfReserve, AccountId, Balances, ()>;
+	type Trader = UsingComponents<WeightToFee, SelfReserve, AccountId, Balances, ToAuthor<Runtime>>;
 	type ResponseHandler = PolkadotXcm;
 	type AssetTrap = PolkadotXcm;
 	type AssetLocker = ();
